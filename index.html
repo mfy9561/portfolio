@@ -449,7 +449,12 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
   .pf-slide-preview{height:260px}
   .pf-prev,.pf-next{width:36px;height:36px;font-size:15px}
   .pf-slide-info{padding:14px 16px}
-}</style>
+}
+/* ── SLIDER PERFORMANCE ── */
+.pf-slide-preview iframe{will-change:auto}
+.pf-slide.active-slide .pf-slide-preview iframe{will-change:transform}
+.pf-slider{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+</style>
 </head>
 <body>
 <div id="prog"></div>
@@ -621,7 +626,7 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 
         <div class="pf-slide">
           <div class="pf-slide-preview">
-            <iframe src="https://mfy9561.github.io/Brew-Haven/" loading="lazy" scrolling="no" title="Brew Haven"></iframe>
+            <iframe data-src="https://mfy9561.github.io/Brew-Haven/" loading="lazy" scrolling="no" title="Brew Haven"></iframe>
             <div class="pf-slide-fade"></div>
           </div>
           <div class="pf-slide-info">
@@ -635,7 +640,7 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 
         <div class="pf-slide">
           <div class="pf-slide-preview">
-            <iframe src="https://influencerprotf.vercel.app/" loading="lazy" scrolling="no" title="Influencer Portfolio"></iframe>
+            <iframe data-src="https://influencerprotf.vercel.app/" loading="lazy" scrolling="no" title="Influencer Portfolio"></iframe>
             <div class="pf-slide-fade"></div>
           </div>
           <div class="pf-slide-info">
@@ -649,7 +654,7 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 
         <div class="pf-slide">
           <div class="pf-slide-preview">
-            <iframe src="https://obsidian-frontend-eight.vercel.app/" loading="lazy" scrolling="no" title="Obsidian"></iframe>
+            <iframe data-src="https://obsidian-frontend-eight.vercel.app/" loading="lazy" scrolling="no" title="Obsidian"></iframe>
             <div class="pf-slide-fade"></div>
           </div>
           <div class="pf-slide-info">
@@ -663,7 +668,7 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 
         <div class="pf-slide">
           <div class="pf-slide-preview">
-            <iframe src="https://maison-dress-shop.vercel.app/" loading="lazy" scrolling="no" title="Maison Dress Shop"></iframe>
+            <iframe data-src="https://maison-dress-shop.vercel.app/" loading="lazy" scrolling="no" title="Maison Dress Shop"></iframe>
             <div class="pf-slide-fade"></div>
           </div>
           <div class="pf-slide-info">
@@ -677,7 +682,7 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 
         <div class="pf-slide">
           <div class="pf-slide-preview">
-            <iframe src="https://forma-premium-nmak.vercel.app/" loading="lazy" scrolling="no" title="Forma Premium"></iframe>
+            <iframe data-src="https://forma-premium-nmak.vercel.app/" loading="lazy" scrolling="no" title="Forma Premium"></iframe>
             <div class="pf-slide-fade"></div>
           </div>
           <div class="pf-slide-info">
@@ -691,7 +696,7 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 
         <div class="pf-slide">
           <div class="pf-slide-preview">
-            <iframe src="https://neocrop.co.in/" loading="lazy" scrolling="no" title="Neocrop"></iframe>
+            <iframe data-src="https://neocrop.co.in/" loading="lazy" scrolling="no" title="Neocrop"></iframe>
             <div class="pf-slide-fade"></div>
           </div>
           <div class="pf-slide-info">
@@ -705,7 +710,7 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 
         <div class="pf-slide">
           <div class="pf-slide-preview">
-            <iframe src="https://paradisesarees.gt.tc/" loading="lazy" scrolling="no" title="Paradise Sarees"></iframe>
+            <iframe data-src="https://paradisesarees.gt.tc/" loading="lazy" scrolling="no" title="Paradise Sarees"></iframe>
             <div class="pf-slide-fade"></div>
           </div>
           <div class="pf-slide-info">
@@ -1344,15 +1349,26 @@ function updateSlider() {
   var idx     = 0;
   var total   = 0;
   var timer   = null;
-  var DELAY   = 3500; // auto-advance every 3.5s
+  var DELAY   = 5000; // auto-advance every 3.5s
   var paused  = false;
   var progress= 0;
   var pTimer  = null;
+
+  function loadIframe(slide) {
+    var iframe = slide.querySelector('iframe[data-src]');
+    if (iframe && !iframe.src) {
+      iframe.src = iframe.getAttribute('data-src');
+    }
+  }
 
   function init() {
     var slides = document.querySelectorAll('.pf-slide');
     total = slides.length;
     if (total === 0) return;
+    
+    // Load first 2 iframes immediately
+    if (slides[0]) loadIframe(slides[0]);
+    if (slides[1]) loadIframe(slides[1]);
 
     // Build dots - for 2-up, show pairs
     var dotsEl = document.getElementById('pfDots');
