@@ -139,10 +139,7 @@ nav.scrolled{height:66px;background:rgba(10,10,10,.98);border-bottom-color:rgba(
 .svc-link{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:gap .3s}
 .svc-link:hover{gap:16px}
 #portfolio{padding:120px 5%;background:var(--bk3)}
-.pf-filter{display:flex;margin-bottom:56px;width:fit-content;border:1px solid rgba(201,168,76,.18);flex-wrap:wrap}
-.f-btn{background:transparent;border:none;border-right:1px solid rgba(201,168,76,.18);padding:12px 24px;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gr);cursor:pointer;transition:all .2s;font-family:var(--fb)}
-.f-btn:last-child{border-right:none}
-.f-btn.active,.f-btn:hover{background:var(--gold);color:var(--bk)}
+/* filter removed */
 .pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;align-items:start}
 .rc{background:var(--bk2);border:1px solid rgba(201,168,76,.08);overflow:hidden;transition:all .4s;display:flex;flex-direction:column}
 .rc:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.3)}
@@ -395,8 +392,8 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 .btt svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
 
 /* ── COOKIE BANNER ── */
-.cookie-bar{position:fixed;bottom:0;left:0;right:0;z-index:2001;background:var(--bk2);border-top:1px solid rgba(201,168,76,.2);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;transform:translateY(100%);transition:transform .4s ease;box-shadow:0 -4px 24px rgba(0,0,0,.3)}
-.cookie-bar.show{transform:translateY(0)}
+.cookie-bar{position:fixed;bottom:0;left:0;right:0;z-index:2001;background:var(--bk2);border-top:1px solid rgba(201,168,76,.2);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;box-shadow:0 -4px 24px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .4s ease,visibility .4s ease;visibility:hidden}
+.cookie-bar.show{opacity:1;pointer-events:auto;visibility:visible}
 .cookie-bar-text{font-size:13px;color:rgba(250,250,248,.65);line-height:1.6;font-weight:300;max-width:600px}
 .cookie-bar-text a{color:var(--gold);text-decoration:none}
 .cookie-bar-btns{display:flex;gap:10px;flex-shrink:0}
@@ -404,11 +401,55 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
 .cookie-accept:hover{background:var(--gold2)}
 .cookie-decline{background:transparent;color:var(--gr);border:1px solid rgba(201,168,76,.2);padding:10px 20px;font-family:var(--fb);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
 .cookie-decline:hover{border-color:var(--gr);color:var(--wh)}
-@media(max-width:640px){.cookie-bar{bottom:56px;flex-direction:column;align-items:flex-start}.cookie-bar-btns{width:100%}.cookie-accept,.cookie-decline{flex:1;text-align:center}}
+@media(max-width:640px){.cookie-bar{flex-direction:column;align-items:flex-start}.cookie-bar-btns{width:100%}.cookie-accept,.cookie-decline{flex:1;text-align:center}}
 
 /* ── SVC TAG ── */
 .svc-tag{font-size:11px;font-weight:600;letter-spacing:1px;color:rgba(201,168,76,.6);margin-bottom:18px;font-style:italic}
-</style>
+
+/* ── PORTFOLIO SLIDER ── */
+.pf-slider-wrap{position:relative;overflow:hidden;border:1px solid rgba(201,168,76,.1)}
+.pf-slider{display:flex;transition:transform .5s cubic-bezier(.16,1,.3,1);will-change:transform}
+.pf-slide{min-width:50%;display:flex;flex-direction:column;background:var(--bk2);border-right:1px solid rgba(201,168,76,.08)}
+.pf-slide-preview{position:relative;height:380px;overflow:hidden;background:var(--bk);flex-shrink:0}
+.pf-slide-preview iframe{position:absolute;top:0;left:0;width:160%;height:160%;transform:scale(0.625);transform-origin:top left;border:none;pointer-events:none}
+.pf-slide-fade{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(17,17,17,.97) 100%)}
+.pf-slide-info{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px 28px;border-top:1px solid rgba(201,168,76,.1);flex-wrap:wrap}
+.pf-slide-name{font-family:var(--fd);font-size:22px;font-weight:600;color:var(--wh);margin-bottom:4px}
+.pf-slide-type{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gr)}
+.pf-prev,.pf-next{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;background:rgba(10,10,10,.85);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:10;backdrop-filter:blur(4px)}
+.pf-prev{left:16px}
+.pf-next{right:16px}
+.pf-prev:hover,.pf-next:hover{background:var(--gold);color:var(--bk);border-color:var(--gold)}
+.pf-prev:disabled,.pf-next:disabled{opacity:.3;cursor:not-allowed}
+.pf-dots{display:flex;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap}
+.pf-dot{width:8px;height:8px;border-radius:50%;background:rgba(201,168,76,.25);border:none;cursor:pointer;transition:all .3s;padding:0}
+.pf-dot.active{background:var(--gold);transform:scale(1.3)}
+.pf-counter{text-align:center;margin-top:16px;font-family:var(--fd);font-size:28px;font-weight:600;color:var(--gold)}
+.pf-counter-label{font-family:var(--fb);font-size:13px;color:var(--gr);margin-left:6px;font-weight:300}
+.pf-slide.hidden{display:none}
+@media(max-width:640px){
+  .pf-slide-preview{height:280px}
+  .pf-prev,.pf-next{width:36px;height:36px;font-size:16px}
+  .pf-slide-info{padding:16px 20px}
+}
+
+/* ── PORTFOLIO PROGRESS + BOTTOM ── */
+.pf-progress-bar{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(201,168,76,.1)}
+.pf-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold));width:0%;transition:width .1s linear}
+.pf-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding:0 4px}
+.pf-dots{display:flex;gap:8px}
+.pf-dot{width:8px;height:8px;border-radius:50%;background:rgba(201,168,76,.2);border:none;cursor:pointer;transition:all .35s;padding:0}
+.pf-dot.active{background:var(--gold);width:24px;border-radius:4px}
+.pf-counter{font-family:var(--fd);font-size:20px;font-weight:600;color:rgba(201,168,76,.6)}
+.pf-sep{margin:0 4px;color:rgba(201,168,76,.3)}
+#pfCurrent{color:var(--gold)}
+
+@media(max-width:768px){
+  .pf-slide{min-width:100%!important}
+  .pf-slide-preview{height:260px}
+  .pf-prev,.pf-next{width:36px;height:36px;font-size:15px}
+  .pf-slide-info{padding:14px 16px}
+}</style>
 </head>
 <body>
 <div id="prog"></div>
@@ -572,32 +613,127 @@ footer{background:var(--bk2);border-top:1px solid rgba(201,168,76,.1);padding:60
       <h2 class="s-title">Real websites. <em>Real results.</em></h2>
       <p class="s-desc">Every project is built to bring more customers to your business.</p>
     </div>
-    <div class="pf-filter anim">
-      <button class="f-btn active" onclick="filterPF('all',this)">All</button>
-      <button class="f-btn" onclick="filterPF('agri',this)">Agriculture</button>
-      <button class="f-btn" onclick="filterPF('retail',this)">Retail</button>
-      <button class="f-btn" onclick="filterPF('other',this)">Others</button>
+
+    <div class="pf-slider-wrap anim">
+
+      <!-- Slides -->
+      <div class="pf-slider" id="pfSlider">
+
+        <div class="pf-slide">
+          <div class="pf-slide-preview">
+            <iframe src="https://mfy9561.github.io/Brew-Haven/" loading="lazy" scrolling="no" title="Brew Haven"></iframe>
+            <div class="pf-slide-fade"></div>
+          </div>
+          <div class="pf-slide-info">
+            <div>
+              <div class="pf-slide-name">Brew Haven</div>
+              <div class="pf-slide-type">Café · Hospitality</div>
+            </div>
+            <a href="https://mfy9561.github.io/Brew-Haven/" target="_blank" rel="noopener" class="visit-btn"><span>Visit Site ↗</span></a>
+          </div>
+        </div>
+
+        <div class="pf-slide">
+          <div class="pf-slide-preview">
+            <iframe src="https://influencerprotf.vercel.app/" loading="lazy" scrolling="no" title="Influencer Portfolio"></iframe>
+            <div class="pf-slide-fade"></div>
+          </div>
+          <div class="pf-slide-info">
+            <div>
+              <div class="pf-slide-name">Influencer Portfolio</div>
+              <div class="pf-slide-type">Creative · Personal Brand</div>
+            </div>
+            <a href="https://influencerprotf.vercel.app/" target="_blank" rel="noopener" class="visit-btn"><span>Visit Site ↗</span></a>
+          </div>
+        </div>
+
+        <div class="pf-slide">
+          <div class="pf-slide-preview">
+            <iframe src="https://obsidian-frontend-eight.vercel.app/" loading="lazy" scrolling="no" title="Obsidian"></iframe>
+            <div class="pf-slide-fade"></div>
+          </div>
+          <div class="pf-slide-info">
+            <div>
+              <div class="pf-slide-name">Obsidian</div>
+              <div class="pf-slide-type">Premium · Frontend</div>
+            </div>
+            <a href="https://obsidian-frontend-eight.vercel.app/" target="_blank" rel="noopener" class="visit-btn"><span>Visit Site ↗</span></a>
+          </div>
+        </div>
+
+        <div class="pf-slide">
+          <div class="pf-slide-preview">
+            <iframe src="https://maison-dress-shop.vercel.app/" loading="lazy" scrolling="no" title="Maison Dress Shop"></iframe>
+            <div class="pf-slide-fade"></div>
+          </div>
+          <div class="pf-slide-info">
+            <div>
+              <div class="pf-slide-name">Maison Dress Shop</div>
+              <div class="pf-slide-type">Retail · Fashion</div>
+            </div>
+            <a href="https://maison-dress-shop.vercel.app/" target="_blank" rel="noopener" class="visit-btn"><span>Visit Site ↗</span></a>
+          </div>
+        </div>
+
+        <div class="pf-slide">
+          <div class="pf-slide-preview">
+            <iframe src="https://forma-premium-nmak.vercel.app/" loading="lazy" scrolling="no" title="Forma Premium"></iframe>
+            <div class="pf-slide-fade"></div>
+          </div>
+          <div class="pf-slide-info">
+            <div>
+              <div class="pf-slide-name">Forma Premium</div>
+              <div class="pf-slide-type">Retail · Lifestyle</div>
+            </div>
+            <a href="https://forma-premium-nmak.vercel.app/" target="_blank" rel="noopener" class="visit-btn"><span>Visit Site ↗</span></a>
+          </div>
+        </div>
+
+        <div class="pf-slide">
+          <div class="pf-slide-preview">
+            <iframe src="https://neocrop.co.in/" loading="lazy" scrolling="no" title="Neocrop"></iframe>
+            <div class="pf-slide-fade"></div>
+          </div>
+          <div class="pf-slide-info">
+            <div>
+              <div class="pf-slide-name">Neocrop</div>
+              <div class="pf-slide-type">Agriculture · B2B Platform</div>
+            </div>
+            <a href="https://neocrop.co.in/" target="_blank" rel="noopener" class="visit-btn"><span>Visit Site ↗</span></a>
+          </div>
+        </div>
+
+        <div class="pf-slide">
+          <div class="pf-slide-preview">
+            <iframe src="https://paradisesarees.gt.tc/" loading="lazy" scrolling="no" title="Paradise Sarees"></iframe>
+            <div class="pf-slide-fade"></div>
+          </div>
+          <div class="pf-slide-info">
+            <div>
+              <div class="pf-slide-name">Paradise Sarees</div>
+              <div class="pf-slide-type">Retail · Saree Store</div>
+            </div>
+            <a href="https://paradisesarees.gt.tc/" target="_blank" rel="noopener" class="visit-btn"><span>Visit Site ↗</span></a>
+          </div>
+        </div>
+
+      </div><!-- end pf-slider -->
+
+      <!-- Prev / Next arrows -->
+      <button class="pf-prev" id="pfPrev" onclick="slidePrev()" aria-label="Previous">&#8592;</button>
+      <button class="pf-next" id="pfNext" onclick="slideNext()" aria-label="Next">&#8594;</button>
+
+      <!-- Progress bar -->
+      <div class="pf-progress-bar"><div class="pf-progress-fill" id="pfProgress"></div></div>
+
     </div>
-    <div class="pf-grid" id="pfGrid">
-      <div class="rc" data-cat="agri">
-        <div class="rc-preview"><iframe src="https://neocrop.co.in/" loading="lazy" scrolling="no" title="Neocrop"></iframe><div class="rc-fade"></div></div>
-        <div class="rc-info"><div class="rc-meta">
-          <div><div class="rc-name">Neocrop</div><div class="rc-type">Agriculture · B2B Platform</div></div>
-          <a href="https://neocrop.co.in/" target="_blank" rel="noopener" class="visit-btn">Visit Site ↗</a>
-        </div></div>
-      </div>
-      <div class="rc" data-cat="retail">
-        <div class="rc-preview"><iframe src="https://paradisesarees.gt.tc/" loading="lazy" scrolling="no" title="Paradise Sarees"></iframe><div class="rc-fade"></div></div>
-        <div class="rc-info"><div class="rc-meta">
-          <div><div class="rc-name">Paradise Sarees</div><div class="rc-type">Retail · Saree Store</div></div>
-          <a href="https://paradisesarees.gt.tc/" target="_blank" rel="noopener" class="visit-btn">Visit Site ↗</a>
-        </div></div>
-      </div>
-      <div class="pc" data-cat="other">
-        <div class="pc-thumb"><div class="pc-icon">✦</div><div class="pc-name">Your Business</div><div class="pc-type">Could be next here</div></div>
-        <div class="pc-overlay"><div class="pc-result">Next?</div><div class="pc-label">Your website could be<br>featured right here</div><a href="#contact" class="pc-link">Get Started →</a></div>
-      </div>
+
+    <!-- Dots + counter -->
+    <div class="pf-bottom">
+      <div class="pf-dots" id="pfDots"></div>
+      <div class="pf-counter"><span id="pfCurrent">1</span><span class="pf-sep">/</span><span id="pfTotal">7</span></div>
     </div>
+
   </div>
 </section>
 <section id="process">
@@ -986,7 +1122,7 @@ function filterPF(cat, btn) {
     c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
   });
 }
-window.filterPF = filterPF;
+
 
 // ── FAQ TOGGLE ──
 function toggleFaq(el) {
@@ -1148,6 +1284,188 @@ setTimeout(function() {
     if (cb) cb.classList.add('show');
   }
 }, 1500);
+
+
+// ── PORTFOLIO SLIDER ──
+var pfIndex = 0;
+var pfSlides = [];
+var pfFiltered = [];
+
+function initSlider() {
+  pfSlides = Array.from(document.querySelectorAll('.pf-slide'));
+  pfFiltered = pfSlides.slice();
+  buildDots();
+  updateSlider();
+}
+
+function buildDots() {
+  var dots = document.getElementById('pfDots');
+  if (!dots) return;
+  dots.innerHTML = '';
+  pfFiltered.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'pf-dot' + (i === pfIndex ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to slide ' + (i+1));
+    d.onclick = function() { pfIndex = i; updateSlider(); };
+    dots.appendChild(d);
+  });
+}
+
+function updateSlider() {
+  var slider = document.getElementById('pfSlider');
+  if (!slider || pfFiltered.length === 0) return;
+
+  // Clamp index
+  pfIndex = Math.max(0, Math.min(pfIndex, pfFiltered.length - 1));
+
+  // Move slider
+  var pct = pfIndex * 100;
+  slider.style.transform = 'translateX(-' + pct + '%)';
+
+  // Update dots
+  document.querySelectorAll('.pf-dot').forEach(function(d, i) {
+    d.classList.toggle('active', i === pfIndex);
+  });
+
+  // Update counter
+  var cur = document.getElementById('pfCurrent');
+  var tot = document.getElementById('pfTotal');
+  if (cur) cur.textContent = pfIndex + 1;
+  if (tot) tot.textContent = pfFiltered.length;
+
+  // Update buttons
+  var prev = document.getElementById('pfPrev');
+  var next = document.getElementById('pfNext');
+  if (prev) prev.disabled = pfIndex === 0;
+  if (next) next.disabled = pfIndex === pfFiltered.length - 1;
+}
+// ── PORTFOLIO AUTO SLIDER ──
+(function() {
+  var idx     = 0;
+  var total   = 0;
+  var timer   = null;
+  var DELAY   = 3500; // auto-advance every 3.5s
+  var paused  = false;
+  var progress= 0;
+  var pTimer  = null;
+
+  function init() {
+    var slides = document.querySelectorAll('.pf-slide');
+    total = slides.length;
+    if (total === 0) return;
+
+    // Build dots - for 2-up, show pairs
+    var dotsEl = document.getElementById('pfDots');
+    if (dotsEl) {
+      var pairs = Math.ceil(total / 2);
+      for (var i = 0; i < pairs; i++) {
+        (function(pi) {
+          var d = document.createElement('button');
+          d.className = 'pf-dot' + (pi === 0 ? ' active' : '');
+          d.setAttribute('aria-label', 'Slide pair ' + (pi+1));
+          d.onclick = function() { goTo(pi * 2); resetTimer(); };
+          dotsEl.appendChild(d);
+        })(i);
+      }
+    }
+
+    var tot = document.getElementById('pfTotal');
+    if (tot) tot.textContent = total;
+
+    update();
+    startTimer();
+
+    // Pause on hover
+    var wrap = document.querySelector('.pf-slider-wrap');
+    if (wrap) {
+      wrap.addEventListener('mouseenter', function() { paused = true; stopTimer(); });
+      wrap.addEventListener('mouseleave', function() { paused = false; resetTimer(); });
+    }
+
+    // Touch swipe
+    var startX = 0;
+    if (wrap) {
+      wrap.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        paused = true; stopTimer();
+      }, { passive: true });
+      wrap.addEventListener('touchend', function(e) {
+        var diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? idx + 1 : idx - 1);
+        paused = false; resetTimer();
+      }, { passive: true });
+    }
+  }
+
+  function goTo(n) {
+    // With 2-up: max idx = total - 2 so last pair shows correctly, wrap around
+    var maxIdx = total - 2;
+    if (maxIdx < 0) maxIdx = 0;
+    if (n > maxIdx) n = 0;   // wrap forward
+    if (n < 0) n = maxIdx;   // wrap backward
+    idx = n;
+    update();
+    resetProgress();
+  }
+
+  function update() {
+    var slider = document.getElementById('pfSlider');
+    var slideW = window.innerWidth <= 768 ? 100 : 50;
+    if (slider) slider.style.transform = 'translateX(-' + (idx * slideW) + '%)'  ;
+
+    // Dots — highlight current pair
+    var pairIdx = Math.floor(idx / 2);
+    document.querySelectorAll('.pf-dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === pairIdx);
+    });
+
+    // Counter
+    var cur = document.getElementById('pfCurrent');
+    if (cur) cur.textContent = idx + 1;
+
+    // Arrows
+    var prev = document.getElementById('pfPrev');
+    var next = document.getElementById('pfNext');
+    if (prev) prev.style.opacity = idx === 0 ? '0.35' : '1';
+    if (next) next.style.opacity = idx === total - 1 ? '0.35' : '1';
+  }
+
+  function startTimer() {
+    stopTimer();
+    progress = 0;
+    resetProgress();
+    timer = setInterval(function() {
+      if (!paused) goTo(idx + 1);
+    }, DELAY);
+  }
+
+  function stopTimer() {
+    if (timer) { clearInterval(timer); timer = null; }
+    if (pTimer) { clearInterval(pTimer); pTimer = null; }
+  }
+
+  function resetTimer() {
+    stopTimer();
+    startTimer();
+  }
+
+  function resetProgress() {
+    var fill = document.getElementById('pfProgress');
+    if (!fill) return;
+    fill.style.transition = 'none';
+    fill.style.width = '0%';
+    setTimeout(function() {
+      fill.style.transition = 'width ' + DELAY + 'ms linear';
+      fill.style.width = '100%';
+    }, 30);
+  }
+
+  // Expose prev/next
+  window.slidePrev = function() { goTo(idx - 1); resetTimer(); };
+  window.slideNext = function() { goTo(idx + 1); resetTimer(); };
+
+  init();
+})();
 
 }); // end DOMContentLoaded
 </script>
